@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Features\Childrens\" />
+      <Folder Include="Features\Evaluation\" />
+      <Folder Include="Features\Groups\" />
+      <Folder Include="Features\Home\Components\" />
+      <Folder Include="SharedComponents\Controls\" />
+    </ItemGroup>
+
+</Project>

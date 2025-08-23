@@ -1,0 +1,7 @@
+﻿services:
+  childrenevaluationsystem.web:
+    image: childrenevaluationsystem.web
+    build:
+      context: .
+      dockerfile: ChildrenEvaluationSystem.Web/Dockerfile
+
