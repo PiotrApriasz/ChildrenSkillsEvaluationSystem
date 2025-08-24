@@ -1,0 +1,51 @@
+@using MudBlazor
+
+
+<div class="glass-card" style="padding: @Padding; max-width: @MaxWidth;">
+    @ChildContent
+</div>
+
+@code {
+[Parameter] public RenderFragment? ChildContent { get; set; }
+[Parameter] public string MaxWidth { get; set; } = "420px";
+[Parameter] public string Padding { get; set; } = "40px";
+}
+
+<style>
+    .glass-card {
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 24px;
+        width: 100%;
+        box-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.1),
+            0 2px 16px rgba(0, 0, 0, 0.05),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .glass-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        transparent);
+    }
+
+    @@media (max-width: 480px) {
+    .glass-card {
+        padding: 24px !important;
+        margin: 16px;
+        border-radius: 20px;
+        max-width: calc(100% - 32px) !important;
+    }
+    }
+</style>

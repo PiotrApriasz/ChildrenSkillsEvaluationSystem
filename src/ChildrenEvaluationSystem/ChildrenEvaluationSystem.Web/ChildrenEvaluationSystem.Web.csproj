@@ -18,7 +18,12 @@
       <Folder Include="Features\Evaluation\" />
       <Folder Include="Features\Groups\" />
       <Folder Include="Features\Home\Components\" />
-      <Folder Include="SharedComponents\Controls\" />
+      <Folder Include="wwwroot\images\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Blazored.FluentValidation" Version="2.2.0" />
+      <PackageReference Include="MudBlazor" Version="8.11.0" />
     </ItemGroup>
 
 </Project>

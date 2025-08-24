@@ -1,0 +1,152 @@
+@page "/"
+@using System.ComponentModel.DataAnnotations
+@using static Microsoft.AspNetCore.Components.Web.RenderMode
+@using System.Text.RegularExpressions
+@using MudBlazor
+@using ChildrenEvaluationSystem.Web.SharedComponents.Widgets
+@using ChildrenEvaluationSystem.Web.SharedComponents.Controls
+
+@rendermode InteractiveServer
+
+<div class="welcome-container">
+    <GlassCard>
+        <div class="card-header">
+            <MudText Typo="Typo.h4" Class="card-title">Witamy w systemie</MudText>
+            <MudText Typo="Typo.body1" Class="card-subtitle">Zaloguj się do swojego konta</MudText>
+        </div>
+
+        <div class="card-content">
+            <div class="login-form">
+                <GlassTextField @bind-Value="Email"
+                                Label="Email"
+                                InputType="InputType.Text" 
+                                HasError="@(!string.IsNullOrEmpty(EmailError))"
+                                ErrorText="@EmailError" />
+
+                <GlassTextField @bind-Value="Password"
+                                Label="Hasło"
+                                InputType="InputType.Password" 
+                                HasError="@(!string.IsNullOrEmpty(PasswordError))"
+                                ErrorText="@PasswordError" />
+
+                <div class="button-group">
+                    <GlassButton OnClick="HandleLogin" ButtonStyle="GlassButton.ButtonStyles.Primary"
+                                 Class="@((IsValid ? "" : "disabled"))"
+                                 Disabled="@(!IsValid)">
+                        Zaloguj się
+                    </GlassButton>
+
+                    <MudDivider Class="my-4">lub</MudDivider>
+
+                    <GlassButton OnClick="HandleRegister" ButtonStyle="GlassButton.ButtonStyles.Secondary">
+                        Utwórz konto
+                    </GlassButton>
+                </div>
+            </div>
+        </div>
+    </GlassCard>
+</div>
+
+@code {
+    private string _email = string.Empty;
+    private string _password = string.Empty;
+    
+    private string? EmailError { get; set; }
+    private string? PasswordError { get; set; }
+    
+    private string Email {
+        get => _email;
+        set {
+            _email = value;
+            EmailError = ValidateEmail(_email);
+        }
+    }
+
+    private string Password {
+        get => _password;
+        set {
+            _password = value;
+            PasswordError = ValidatePassword(_password);
+        }
+    }
+    
+    private bool IsValid =>
+        string.IsNullOrEmpty(EmailError) &&
+        string.IsNullOrEmpty(PasswordError) &&
+        !string.IsNullOrWhiteSpace(Email) &&
+        !string.IsNullOrWhiteSpace(Password);
+    
+    private static string? ValidateEmail(string v)
+    {
+        if (string.IsNullOrWhiteSpace(v)) return "Email jest wymagany";
+        return Regex.IsMatch(v, @"^[^@\s]+@[^@\s]+\.[^@\s]+$") ? null : "Niepoprawny format adresu email";
+    }
+
+    private static string? ValidatePassword(string v)
+    {
+        return string.IsNullOrWhiteSpace(v) ? "Hasło jest wymagane" : null;
+    }
+    
+
+    private async Task HandleLogin()
+    {
+        EmailError = ValidateEmail(Email);
+        PasswordError = ValidatePassword(Password);
+        if (!IsValid) return;
+        
+        await Task.CompletedTask;
+    }
+
+    private void HandleRegister()
+    {
+        // Logika rejestracji
+    }
+}
+
+<style>
+    
+    .welcome-container {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        position: fixed;
+        top: 250px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 0 20px;
+        overflow: hidden;
+    }
+
+    .card-header {
+        text-align: center;
+        margin-bottom: 32px;
+    }
+
+    .card-title {
+        font-weight: 700 !important;
+        margin-bottom: 8px !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-subtitle {
+        color: #5A4633 !important;
+        opacity: 0.8;
+    }
+
+    .login-form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .button-group {
+        margin-top: 24px;
+    }
+
+    .mud-divider {
+        margin: 20px 0 !important;
+        color: #5A4633 !important;
+        opacity: 0.6;
+    }
+</style>

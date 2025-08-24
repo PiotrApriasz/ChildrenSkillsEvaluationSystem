@@ -1,0 +1,133 @@
+@using MudBlazor
+
+<div class="gi-field @(IsRaised ? "gi-raised" : null)">
+    <input id="@Id"
+           class="gi-input @(HasError ? "gi-input-error" : null)" 
+           type="@HtmlType"
+           @bind-value="CurrentValue" @bind-value:event="oninput"
+           placeholder=" "
+           @onfocus="() => _isFocused = true"
+           @onblur="() => _isFocused = false"
+           aria-invalid="@HasError"
+           aria-describedby="@(HasError ? $"{Id}_err" : null)"
+           required="@Required" />
+    
+    @if (!string.IsNullOrWhiteSpace(Label))
+    {
+        <label for="@Id" class="gi-label">@Label</label>
+    }
+    
+    @if (HasError && !string.IsNullOrWhiteSpace(ErrorText))
+    {
+        <div id="@($"{Id}_err")" class="gi-error">@ErrorText</div>
+    }
+</div>
+
+@code {
+    [Parameter] public string Value { get; set; } = string.Empty;
+    [Parameter] public EventCallback<string> ValueChanged { get; set; }
+    [Parameter] public string Label { get; set; } = string.Empty;
+    [Parameter] public InputType InputType { get; set; } = InputType.Text;
+    [Parameter] public bool Required { get; set; }
+    [Parameter] public bool HasError { get; set; }
+    [Parameter] public string? ErrorText { get; set; }
+
+    private bool _isFocused;
+    private bool IsRaised => _isFocused || !string.IsNullOrEmpty(Value);
+    private string Id { get; } = $"gi_{Guid.NewGuid():N}";
+    private string HtmlType => InputType switch {
+        InputType.Password => "password",
+        InputType.Email    => "email",
+        InputType.Number   => "number",
+        _ => "text"
+    };
+    
+    private string CurrentValue
+    {
+        get => Value;
+        set
+        {
+            if (Value == value) return;
+            Value = value;
+            _ = ValueChanged.InvokeAsync(value); 
+        }
+    }
+}
+
+<style>
+    .gi-field {
+        --gi-border-normal: #5A4633; /* nieaktywne */
+        --gi-border-focus:  #5A4633; /* aktywne */
+        --gi-radius: 12px;
+        --gi-border-w: 1px;
+        --gi-border-w-focus: 2px;
+
+        position: relative;
+        display: block;
+        border-radius: var(--gi-radius);
+        padding: 18px 16px 10px 16px;
+    }
+
+    /* tu jest RAMKA */
+    .gi-field::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: var(--gi-radius);
+        border: var(--gi-border-w) solid var(--gi-border-normal);
+        pointer-events: none;
+        transition: all .18s ease;
+    }
+
+    /* hover */
+    .gi-field:hover::before {
+        border-color: rgba(199,178,153,0.8);
+    }
+
+    /* focus */
+    .gi-field:focus-within::before {
+        border: var(--gi-border-w-focus) solid var(--gi-border-focus);
+        box-shadow: 0 0 0 2px rgba(199,178,153,0.2);
+    }
+
+    /* input */
+    .gi-input {
+        width: 100%;
+        border: none;
+        outline: none;
+        background: transparent;
+        font: inherit;
+        color: inherit;
+        padding: 6px 0;
+    }
+
+    /* label */
+    .gi-label {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1rem;
+        color: var(--gi-border-normal);
+        pointer-events: none;
+        transition: all .18s ease;
+    }
+
+    /* uniesienie */
+    .gi-field:focus-within .gi-label,
+    .gi-field.gi-raised .gi-label {
+        top: 0;
+        transform: translateY(-50%) scale(.9);
+        font-size: .8rem;
+        color: var(--gi-border-focus);
+    }
+
+    .gi-error { 
+        margin-top: 4px; font-size: .8rem; color: #B3261E; opacity: .95; 
+    }
+    
+    .gi-input-error { 
+        caret-color: #B3261E; 
+    }
+
+</style>

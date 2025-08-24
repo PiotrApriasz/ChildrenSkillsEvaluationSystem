@@ -1,0 +1,128 @@
+@using Microsoft.AspNetCore.Components.Web
+@using MudBlazor
+
+<MudButton Variant="@Variant"
+           Color="@Color"
+           Size="@Size"
+           Class="@($"{GetButtonClass()} {Class}")"
+           OnClick="@OnClick"
+           FullWidth="@FullWidth"
+           Disabled="@Disabled">
+    @ChildContent
+</MudButton>
+
+@code {
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public Variant Variant { get; set; } = Variant.Filled;
+    [Parameter] public Color Color { get; set; } = Color.Primary;
+    [Parameter] public Size Size { get; set; } = Size.Large;
+    [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
+    [Parameter] public bool FullWidth { get; set; } = true;
+    [Parameter] public ButtonStyles ButtonStyle { get; set; } = ButtonStyles.Primary;
+    [Parameter] public string Class { get; set; } = string.Empty;
+    [Parameter] public bool Disabled { get; set; }
+
+    private string GetButtonClass()
+    {
+        return ButtonStyle switch
+        {
+            ButtonStyles.Primary => "glass-button-primary",
+            ButtonStyles.Secondary => "glass-button-secondary",
+            ButtonStyles.Transparent => "glass-button-transparent",
+            _ => "glass-button-primary"
+        };
+    }
+}
+
+@code {
+    public enum ButtonStyles
+    {
+        Primary,
+        Secondary,
+        Transparent
+    }
+}
+
+<style>
+
+    .glass-button-primary {
+        background: linear-gradient(135deg, #C7B299 0%, #B8A082 100%) !important;
+        color: white !important;
+        border-radius: 12px !important;
+        font-weight: 600 !important;
+        text-transform: none !important;
+        box-shadow:
+            0 4px 16px rgba(199, 178, 153, 0.3),
+            0 2px 8px rgba(0, 0, 0, 0.1) !important;
+        border: none !important;
+        transform: translateY(0);
+        transition: all 0.15s ease !important;
+    }
+
+    .glass-button-primary:hover {
+        background: linear-gradient(135deg, #B8A082 0%, #A68B6B 100%) !important;
+        transform: translateY(-2px);
+        box-shadow:
+            0 6px 20px rgba(199, 178, 153, 0.4),
+            0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    }
+
+    .glass-button-primary:active {
+        transform: translateY(2px) !important;
+        background: linear-gradient(135deg, #A68B6B 0%, #956F54 100%) !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+        transition: all 0.1s ease !important;
+    }
+
+    .glass-button-secondary {
+        background: rgba(255, 255, 255, 0.6) !important;
+        backdrop-filter: blur(10px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        color: #4B3A2A !important;
+        border-radius: 12px !important;
+        font-weight: 600 !important;
+        text-transform: none !important;
+        transform: translateY(0);
+        transition: all 0.15s ease !important;
+    }
+
+    .glass-button-secondary:hover {
+        background: rgba(255, 255, 255, 0.8) !important;
+        border-color: rgba(255, 255, 255, 0.5) !important;
+        transform: translateY(-2px);
+    }
+
+    .glass-button-secondary:active {
+        transform: translateY(2px) !important;
+        background: rgba(255, 255, 255, 0.9) !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+        transition: all 0.1s ease !important;
+    }
+
+    .glass-button-transparent {
+        background: transparent !important;
+        border: none !important;
+        color: #4B3A2A !important;
+        border-radius: 12px !important;
+        font-weight: 600 !important;
+        text-transform: none !important;
+        transform: translateY(0);
+        transition: all 0.15s ease !important;
+        backdrop-filter: none !important;
+        width: auto !important;
+        min-width: auto !important;
+        white-space: nowrap !important;
+    }
+
+    .glass-button-transparent:hover {
+        background: rgba(255, 255, 255, 0.2) !important;
+        transform: translateY(-2px);
+        backdrop-filter: blur(5px) !important;
+    }
+
+    .glass-button-transparent:active {
+        transform: translateY(2px) !important;
+        background: rgba(255, 255, 255, 0.3) !important;
+        transition: all 0.1s ease !important;
+    }
+</style>
