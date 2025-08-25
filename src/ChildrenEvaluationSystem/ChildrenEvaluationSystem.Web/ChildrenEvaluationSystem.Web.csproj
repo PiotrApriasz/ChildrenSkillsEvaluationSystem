@@ -1,11 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    </PropertyGroup>
+      <UserSecretsId>113b3093-22d7-4028-bb02-fea9569feda1</UserSecretsId>
+  </PropertyGroup>
 
     <ItemGroup>
       <Content Include="..\.dockerignore">
@@ -22,8 +23,16 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Azure.Identity" Version="1.15.0" />
       <PackageReference Include="Blazored.FluentValidation" Version="2.2.0" />
+      <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="9.0.8" />
+      <PackageReference Include="Microsoft.Identity.Web" Version="3.13.2" />
       <PackageReference Include="MudBlazor" Version="8.11.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ChildrenEvaluationSystem.Application\ChildrenEvaluationSystem.Application.csproj" />
     </ItemGroup>
 
 </Project>

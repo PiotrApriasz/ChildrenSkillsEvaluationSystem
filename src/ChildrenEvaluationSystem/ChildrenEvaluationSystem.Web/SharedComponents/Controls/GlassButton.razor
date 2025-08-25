@@ -29,6 +29,7 @@
             ButtonStyles.Primary => "glass-button-primary",
             ButtonStyles.Secondary => "glass-button-secondary",
             ButtonStyles.Transparent => "glass-button-transparent",
+            ButtonStyles.Glass => "glass-button-glass",
             _ => "glass-button-primary"
         };
     }
@@ -39,7 +40,8 @@
     {
         Primary,
         Secondary,
-        Transparent
+        Transparent,
+        Glass
     }
 }
 
@@ -123,6 +125,60 @@
     .glass-button-transparent:active {
         transform: translateY(2px) !important;
         background: rgba(255, 255, 255, 0.3) !important;
+        transition: all 0.1s ease !important;
+    }
+
+
+    .glass-button-glass {
+        background: rgba(255, 255, 255, 0.25) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-radius: 16px !important;
+        color: #4B3A2A !important;
+        font-weight: 600 !important;
+        text-transform: none !important;
+        box-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.1),
+            0 2px 16px rgba(0, 0, 0, 0.05),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+        position: relative;
+        overflow: hidden;
+        transform: translateY(0);
+        transition: all 0.15s ease !important;
+        padding: 16px 20px !important;
+        min-height: 56px !important;
+    }
+
+    .glass-button-glass::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        transparent);
+    }
+
+    .glass-button-glass:hover {
+        background: rgba(255, 255, 255, 0.35) !important;
+        border-color: rgba(255, 255, 255, 0.3) !important;
+        transform: translateY(-2px);
+        box-shadow:
+            0 12px 40px rgba(0, 0, 0, 0.15),
+            0 4px 20px rgba(0, 0, 0, 0.08),
+            inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+    }
+
+    .glass-button-glass:active {
+        transform: translateY(1px) !important;
+        background: rgba(255, 255, 255, 0.45) !important;
+        box-shadow:
+            0 4px 20px rgba(0, 0, 0, 0.1),
+            0 2px 12px rgba(0, 0, 0, 0.05) !important;
         transition: all 0.1s ease !important;
     }
 </style>
