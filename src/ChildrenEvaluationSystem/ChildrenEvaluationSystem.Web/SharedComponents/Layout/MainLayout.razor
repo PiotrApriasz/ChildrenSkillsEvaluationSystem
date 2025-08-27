@@ -2,52 +2,65 @@
 @using MudBlazor
 @using Microsoft.AspNetCore.Components.Web
 @using ChildrenEvaluationSystem.Web.SharedComponents.Controls
+@using Microsoft.AspNetCore.Components.Authorization
+@using ChildrenEvaluationSystem.Web.SharedComponents.Pages
+@using IAuthenticationService = ChildrenEvaluationSystem.Application.Interfaces.IAuthenticationService
 @inherits LayoutComponentBase
 
-<MudThemeProvider Theme="MyCustomTheme"/>
-<MudPopoverProvider/>
-<MudDialogProvider/>
-<MudSnackbarProvider/>
+@inject NavigationManager Navigation
+@inject IAuthenticationService AuthenticationService
 
-<div class="page-background-class">
-    <MudLayout>
-        <MudAppBar Color="Color.Transparent" Elevation="0" Class="menubar">
-            <MudImage Src="images/mainLogo.png" Alt="Logo" Class="ml-16 mt-16" Height="50" Width="50"/>
-            <MudText Typo="Typo.h5" Class="ml-3 mt-16 menubar-title">System oceny przedszkolnej</MudText>
-            <MudSpacer/>
-            <GlassButton ButtonStyle="GlassButton.ButtonStyles.Transparent" Class="mt-16 mr-10"
-                         OnClick="NavigateToSignIn">Zaloguj Się<MudIcon Icon="@Icons.Material.Rounded.Login" Class="ml-2" /></GlassButton>
-            <MudLink Href="https://github.com/PiotrApriasz?tab=repositories">
-                <MudIconButton Icon="@Icons.Custom.Brands.GitHub" aria-label="github" Class="mr-16 mt-16"
-                               Size="Size.Large"></MudIconButton>
-            </MudLink>
-        </MudAppBar>
-        <MudMainContent>
-        <ErrorBoundary>
-            <ChildContent>
-                @Body
-            </ChildContent>
-            <ErrorContent Context="ex">
-                <Error Exception="@ex"></Error>
-            </ErrorContent>
-        </ErrorBoundary>
-        </MudMainContent>
-    </MudLayout>
-</div>
+
+<CascadingAuthenticationState>
+    <MudThemeProvider Theme="MyCustomTheme"/>
+    <MudPopoverProvider/>
+    <MudDialogProvider/>
+    <MudSnackbarProvider/>
+
+    <div class="page-background-class">
+        <MudLayout>
+            <AuthorizeView>
+                <Authorized>
+                    <MudAppBar Color="Color.Transparent" Elevation="0" Class="menubar">
+                        <MudImage Src="images/mainLogo.png" Alt="Logo" Class="ml-16 mt-16" Height="50" Width="50"/>
+                        <MudText Typo="Typo.h5" Class="ml-3 mt-16 menubar-title">System oceny przedszkolnej</MudText>
+                        <MudSpacer/>
+                        <MudText Class="mt-16 mr-4">Witaj, @AuthenticationService.GetUsername()</MudText>
+                        <MudLink Href="https://github.com/PiotrApriasz?tab=repositories">
+                            <MudIconButton Icon="@Icons.Custom.Brands.GitHub" aria-label="github" Class="mr-16 mt-16"
+                                           Size="Size.Large"></MudIconButton>
+                        </MudLink>
+                    </MudAppBar>
+                </Authorized>
+                <NotAuthorized>
+                    <MudAppBar Color="Color.Transparent" Elevation="0" Class="menubar">
+                        <MudImage Src="images/mainLogo.png" Alt="Logo" Class="ml-16 mt-16" Height="50" Width="50"/>
+                        <MudText Typo="Typo.h5" Class="ml-3 mt-16 menubar-title">System oceny przedszkolnej</MudText>
+                        <MudSpacer/>
+                        <MudLink Href="https://github.com/PiotrApriasz?tab=repositories">
+                            <MudIconButton Icon="@Icons.Custom.Brands.GitHub" aria-label="github" Class="mr-16 mt-16"
+                                           Size="Size.Large"></MudIconButton>
+                        </MudLink>
+                    </MudAppBar>
+                </NotAuthorized>
+            </AuthorizeView>
+            <MudMainContent>
+                <ErrorBoundary>
+                    <ChildContent>
+                        @Body
+                    </ChildContent>
+                    <ErrorContent Context="ex">
+                        <Error Exception="@ex"></Error>
+                    </ErrorContent>
+                </ErrorBoundary>
+            </MudMainContent>
+        </MudLayout>
+    </div>
+</CascadingAuthenticationState>
 
 
 
 @code {
-    
-    private void NavigateToSignIn()
-    {
-        
-    }
-
-    private void SignOut()
-    {
-        
-    }
     
     MudTheme MyCustomTheme = new MudTheme()
     {

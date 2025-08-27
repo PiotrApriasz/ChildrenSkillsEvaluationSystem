@@ -1,0 +1,123 @@
+.welcome-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 20px;
+}
+
+.auth-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    max-width: 420px;
+    width: 100%;
+    margin-top: 200px;
+}
+
+.card-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.card-title {
+    font-weight: 700 !important;
+    margin-bottom: 8px !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.card-subtitle {
+    color: #5A4633 !important;
+    opacity: 0.8;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.button-group {
+    margin-top: 24px;
+}
+
+.mud-divider {
+    margin: 20px 0 !important;
+    color: #5A4633 !important;
+    opacity: 0.6;
+}
+
+.auth-divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: #5A4633;
+    font-size: 14px;
+    opacity: 0.8;
+    margin: 32px 0 24px;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid rgba(90, 70, 51, 0.3);
+}
+
+.auth-divider:not(:empty)::before {
+    margin-right: 12px;
+}
+
+.auth-divider:not(:empty)::after {
+    margin-left: 12px;
+}
+
+.external-auth-container {
+    margin-top: 0;
+    width: 100%;
+}
+
+.external-auth-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+}
+
+.external-auth-button {
+    flex: 1;
+    max-width: 200px;
+}
+
+.auth-button-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.auth-icon {
+    width: 18px !important;
+    height: 18px !important;
+    flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+    .welcome-container {
+        padding: 0 16px;
+    }
+    .auth-stack {
+        margin-top: 120px;
+    }
+
+    .external-auth-buttons {
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+    }
+
+    .external-auth-button {
+        max-width: 100%;
+    }
+}

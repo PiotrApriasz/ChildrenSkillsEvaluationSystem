@@ -33,6 +33,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ChildrenEvaluationSystem.Application\ChildrenEvaluationSystem.Application.csproj" />
+      <ProjectReference Include="..\ChildrenEvaluationSystem.Infrastructure\ChildrenEvaluationSystem.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>
