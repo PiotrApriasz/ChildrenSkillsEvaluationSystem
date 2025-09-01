@@ -23,6 +23,38 @@ builder.Services
     .AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
     .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("AzureEntra"));
 
+builder.Services.PostConfigure<OpenIdConnectOptions>(OpenIdConnectDefaults.AuthenticationScheme, options =>
+{
+    options.SaveTokens = true;
+
+    options.Events.OnRedirectToIdentityProviderForSignOut = async ctx =>
+    {
+        var idToken = await ctx.HttpContext.GetTokenAsync("id_token");
+        if (!string.IsNullOrEmpty(idToken))
+            ctx.ProtocolMessage.IdTokenHint = idToken;
+        
+        var loginHintClaim = ctx.HttpContext.User.FindFirst("login_hint");
+        if (loginHintClaim != null && !string.IsNullOrEmpty(loginHintClaim.Value))
+            ctx.ProtocolMessage.SetParameter("logout_hint", loginHintClaim.Value);
+        
+        if (string.IsNullOrEmpty(ctx.ProtocolMessage.ClientId))
+            ctx.ProtocolMessage.ClientId = options.ClientId;
+        
+        var authority = options.Authority?.TrimEnd('/') ?? "";
+        var baseAuth  = authority.EndsWith("/v2.0", StringComparison.OrdinalIgnoreCase)
+            ? authority[..^"/v2.0".Length]
+            : authority;
+        ctx.ProtocolMessage.IssuerAddress = $"{baseAuth}/oauth2/v2.0/logout";
+        
+        var postLogout = builder.Configuration["AzureEntra:SignedOutRedirectUri"] ?? "/";
+        ctx.ProtocolMessage.PostLogoutRedirectUri =
+            $"{ctx.Request.Scheme}://{ctx.Request.Host}{postLogout}";
+    };
+    
+    options.Scope.Add("openid");
+    options.Scope.Add("profile");
+});
+
 builder.Services.AddControllersWithViews()
     .AddMicrosoftIdentityUI();
 
