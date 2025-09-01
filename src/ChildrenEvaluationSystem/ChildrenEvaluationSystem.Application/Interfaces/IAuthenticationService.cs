@@ -2,8 +2,8 @@ namespace ChildrenEvaluationSystem.Application.Interfaces;
 
 public interface IAuthenticationService
 {
-    Task LoginAsync();
-    Task LogoutAsync();
+    Task LoginAsync(string? returnUrl = "/");
+    Task LogoutAsync(string? returnUrl = "/");
     bool IsAuthenticatedAsync();
     string GetUsername();
     string GetEmail();

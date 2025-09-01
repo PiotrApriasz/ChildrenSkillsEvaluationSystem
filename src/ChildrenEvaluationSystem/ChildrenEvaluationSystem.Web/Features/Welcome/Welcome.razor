@@ -9,6 +9,7 @@
 @using Microsoft.JSInterop
 
 @inject NavigationManager Navigation
+@inject Application.Interfaces.IAuthenticationService AuthenticationService
 
 @rendermode InteractiveServer
 
@@ -51,7 +52,7 @@
         <div class="external-auth-container">
             <div class="external-auth-buttons">
                 <GlassButton ButtonStyle="GlassButton.ButtonStyles.Glass"
-                             OnClick="HandleMicrosoftLogin"
+                             OnClick="@(() => AuthenticationService.LoginAsync(new Uri(Navigation.Uri).PathAndQuery))"
                              Class="external-auth-button">
                     <div class="auth-button-content">
                         <MudIcon Icon="@MicrosoftIcon" Class="auth-icon"/>
@@ -61,7 +62,7 @@
 
                 <GlassButton ButtonStyle="GlassButton.ButtonStyles.Glass"
                              Class="external-auth-button"
-                             OnClick="HandleGoogleLogin">
+                             OnClick="@(() => AuthenticationService.LogoutAsync(new Uri(Navigation.Uri).PathAndQuery))">
                     <div class="auth-button-content">
                         <MudIcon Icon="@GoogleIcon" Class="auth-icon"/>
                         <span>Google</span>

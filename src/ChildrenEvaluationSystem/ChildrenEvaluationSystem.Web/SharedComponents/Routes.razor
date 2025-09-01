@@ -1,33 +1,33 @@
 ﻿@using Microsoft.AspNetCore.Components.Authorization
 
-<Router AppAssembly="typeof(Program).Assembly">
-    <Found Context="routeData">
-        <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)">
-            <NotAuthorized>
-                @if (context.User.Identity?.IsAuthenticated != true)
-                {
+<CascadingAuthenticationState>
+    <Router AppAssembly="typeof(Program).Assembly">
+        <Found Context="routeData">
+            <AuthorizeRouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)">
+                <NotAuthorized>
                     <RedirectToLogin />
-                }
-                else
-                {
-                    <div class="alert alert-danger">
-                        <p>You are not authorized to access this resource.</p>
-                    </div>
-                }
-            </NotAuthorized>
-        </AuthorizeRouteView>
-        <FocusOnNavigate RouteData="routeData" Selector="h1" />
-    </Found>
-</Router>
+                </NotAuthorized>
+            </AuthorizeRouteView>
+            <FocusOnNavigate RouteData="routeData" Selector="h1" />
+        </Found>
+        <NotFound>
+            <LayoutView Layout="typeof(Layout.MainLayout)">
+                <p>Nie znaleziono strony.</p>
+            </LayoutView>
+        </NotFound>
+    </Router>
+</CascadingAuthenticationState>
 
 @code {
     public class RedirectToLogin : ComponentBase
     {
-        [Inject] private NavigationManager Navigation { get; set; } = default!;
+        [Inject] private NavigationManager Navigation { get; set; } = null!;
 
         protected override void OnInitialized()
         {
-            Navigation.NavigateTo("/", forceLoad: true);
+            var returnUrl = new Uri(Navigation.Uri).PathAndQuery;
+            var target = $"/MicrosoftIdentity/Account/SignIn?returnUrl={Uri.EscapeDataString(returnUrl)}";
+            Navigation.NavigateTo(target, forceLoad: true);
         }
     }
 }
