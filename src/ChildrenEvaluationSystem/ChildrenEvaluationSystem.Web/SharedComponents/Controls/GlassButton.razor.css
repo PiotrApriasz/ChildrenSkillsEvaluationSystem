@@ -73,3 +73,47 @@
     background: var(--glass-bg-active) !important;
     box-shadow: var(--elevation-1) !important;
 }
+
+.glass-button[disabled],
+.glass-button:disabled {
+    cursor:not-allowed !important;
+    opacity:.55 !important;
+    pointer-events:none !important;
+    box-shadow:none !important;
+    filter:saturate(.5);
+}
+
+
+.glass-button-primary[disabled],
+.glass-button-primary:disabled {
+    background:linear-gradient(135deg,var(--accent-1-0) 0%,var(--accent-1-1) 100%) !important;
+}
+
+
+.glass-button-secondary[disabled],
+.glass-button-secondary:disabled {
+    background: var(--translucent-mid) !important;
+    border-color: var(--translucent-border) !important;
+}
+
+
+.glass-button-transparent[disabled],
+.glass-button-transparent:disabled {
+    color: var(--color-text-secondary) !important;
+    background:transparent !important;
+}
+
+
+.glass-button-glass[disabled],
+.glass-button-glass:disabled {
+    background: var(--glass-bg) !important;
+    border-color: var(--glass-border) !important;
+    box-shadow: var(--elevation-1) !important;
+}
+
+.glass-button[disabled]:hover,
+.glass-button[disabled]:active,
+.glass-button:disabled:hover,
+.glass-button:disabled:active {
+    background:inherit !important;
+}

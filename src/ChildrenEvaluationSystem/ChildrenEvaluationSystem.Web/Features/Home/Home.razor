@@ -12,14 +12,13 @@
 @inject NavigationManager Navigation
 @inject IAuthenticationService AuthenticationService
 
-@rendermode InteractiveServer
 @attribute [Authorize]
 
 
 <div class="home-container">
     <div class="home-header">
         <MudText Typo="Typo.h3" Class="welcome-title">
-            Witaj ponownie, @AuthenticationService.GetFirstName()!
+            Witaj ponownie, @AuthenticationService.GetUsername()!
         </MudText>
         <MudText Typo="Typo.body1" Class="welcome-subtitle">
             Wybierz sekcję, którą chcesz zarządzać

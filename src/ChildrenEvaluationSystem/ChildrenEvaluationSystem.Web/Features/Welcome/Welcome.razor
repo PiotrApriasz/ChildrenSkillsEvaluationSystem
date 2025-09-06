@@ -14,7 +14,6 @@
 @inject NavigationManager Navigation
 @inject Application.Interfaces.IAuthenticationService AuthenticationService
 
-@rendermode InteractiveServer
 
 <div class="welcome-container">
     <div class="auth-stack">
@@ -28,12 +27,14 @@
                 <div class="login-form">
                     <GlassTextField @bind-Value="Email"
                                     Label="Email"
+                                    Disabled="true"
                                     InputType="InputType.Text"
                                     HasError="@(!string.IsNullOrEmpty(EmailError))"
                                     ErrorText="@EmailError" />
 
                     <GlassTextField @bind-Value="Password"
                                     Label="Hasło"
+                                    Disabled="true"
                                     InputType="InputType.Password"
                                     HasError="@(!string.IsNullOrEmpty(PasswordError))"
                                     ErrorText="@PasswordError" />
@@ -41,10 +42,10 @@
                     <div class="button-group">
                         <GlassButton OnClick="HandleLogin"
                                      ButtonStyle="ButtonStyles.Primary"
-                                     Class="@((IsValid ? "" : "disabled"))"
                                      Disabled="@(!IsValid)">Zaloguj się</GlassButton>
                         <GlassButton Class="mt-6"
                                      OnClick="HandleRegister"
+                                     Disabled="true"
                                      ButtonStyle="ButtonStyles.Secondary">Utwórz konto</GlassButton>
                     </div>
                 </div>
@@ -60,11 +61,12 @@
                 <ExternalAuthButton
                     Icon="@MicrosoftIcon"
                     Text="Microsoft"
-                    OnClick="@(() => AuthenticationService.LoginAsync(new Uri(Navigation.Uri).PathAndQuery))" />
+                    OnClick="@(() => AuthenticationService.LoginAsync("/Home"))" />
                 <ExternalAuthButton
                     Icon="@GoogleIcon"
                     Text="Google"
-                    OnClick="@(() => AuthenticationService.LogoutAsync(new Uri(Navigation.Uri).PathAndQuery))" />
+                    Disabled="false"
+                    OnClick="@(() => AuthenticationService.LogoutAsync("/"))" />
             </div>
         </div>
     </div>
