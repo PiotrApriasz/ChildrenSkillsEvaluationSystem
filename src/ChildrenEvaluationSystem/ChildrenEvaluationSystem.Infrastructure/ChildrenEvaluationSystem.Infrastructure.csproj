@@ -16,4 +16,8 @@
       <PackageReference Include="Microsoft.Identity.Web" Version="3.13.2" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Database\" />
+    </ItemGroup>
+
 </Project>

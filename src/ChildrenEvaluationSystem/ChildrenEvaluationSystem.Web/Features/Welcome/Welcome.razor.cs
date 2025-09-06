@@ -1,5 +1,4 @@
 using System.Security.Claims;
-using ChildrenEvaluationSystem.Application.Models.Identity;
 using ChildrenEvaluationSystem.Web.Features.Welcome.Validation;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
@@ -64,12 +63,6 @@ public partial class Welcome : ComponentBase
         EmailError = LoginFormValidation.ValidateEmail(Email);
         PasswordError = LoginFormValidation.ValidatePassword(Password);
         if (!IsValid) return;
-        
-        var loginModel = new LoginModel
-        {
-            Email = Email,
-            Password = Password
-        };
         
         await Task.CompletedTask;
     }
