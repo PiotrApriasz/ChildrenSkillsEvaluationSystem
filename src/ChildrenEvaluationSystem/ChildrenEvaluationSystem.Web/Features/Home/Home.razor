@@ -1,17 +1,19 @@
 ﻿@page "/Home"
 
-@rendermode InteractiveServer
-
 @using MudBlazor
 @using ChildrenEvaluationSystem.Web.SharedComponents.Widgets
 @using ChildrenEvaluationSystem.Web.SharedComponents.Controls
 @using ChildrenEvaluationSystem.Web.SharedComponents.Values
+@using Microsoft.AspNetCore.Authorization
 @using static Microsoft.AspNetCore.Components.Web.RenderMode
 @using IAuthenticationService = ChildrenEvaluationSystem.Application.Interfaces.IAuthenticationService
 @using Microsoft.AspNetCore.Components.Web
 
 @inject NavigationManager Navigation
 @inject IAuthenticationService AuthenticationService
+
+@rendermode InteractiveServer
+@attribute [Authorize]
 
 
 <div class="home-container">

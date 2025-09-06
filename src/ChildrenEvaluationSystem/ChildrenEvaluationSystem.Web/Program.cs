@@ -73,6 +73,7 @@ IdentityModelEventSource.LogCompleteSecurityArtifact = true;
 IdentityModelEventSource.ShowPII = true;
 
 builder.Services.AddAuthorization();
+builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
