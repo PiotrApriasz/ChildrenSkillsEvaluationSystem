@@ -1,0 +1,45 @@
+@using MudBlazor
+
+<div class="feature-card"
+     role="button" tabindex="0"
+     @onclick="OnClick"
+     @onkeydown="HandleKeyDown">
+    <GlassCard Class="glass-interactive glass-elevation-2">
+        <div class="card-content">
+            <div class="card-icon @IconBackgroundClass">
+                <MudIcon Icon="@Icon" Size="Size.Large" />
+            </div>
+            <MudText Typo="Typo.h5" Class="card-title">@Title</MudText>
+            <MudText Typo="Typo.body2" Class="card-description">@Description</MudText>
+            @if (!string.IsNullOrWhiteSpace(ChipText))
+            {
+                <div class="card-stats">
+                    <MudChip T="string" Color="@ChipColor" Size="Size.Small" Variant="Variant.Text">
+                        @if (!string.IsNullOrWhiteSpace(ChipIcon))
+                        {
+                            <MudIcon Icon="@ChipIcon" Size="Size.Small" Class="mr-1" />
+                        }
+                        @ChipText
+                    </MudChip>
+                </div>
+            }
+        </div>
+    </GlassCard>
+</div>
+
+@code {
+    [Parameter] public string Title { get; set; } = default!;
+    [Parameter] public string Description { get; set; } = default!;
+    [Parameter] public string Icon { get; set; } = default!;
+    [Parameter] public string ChipText { get; set; } = string.Empty;
+    [Parameter] public string ChipIcon { get; set; } = string.Empty;
+    [Parameter] public Color ChipColor { get; set; } = Color.Primary;
+    [Parameter] public EventCallback OnClick { get; set; }
+    [Parameter] public string IconBackgroundClass { get; set; } = "gradient--primary";
+
+    private async Task HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter" || e.Key == " ")
+            await OnClick.InvokeAsync();
+    }
+}

@@ -1,0 +1,17 @@
+.feature-card { cursor:pointer; outline:none; }
+.feature-card:focus-visible { outline:2px solid var(--accent-1-1); outline-offset:4px; }
+
+.card-content {
+    text-align:center; display:flex; flex-direction:column; align-items:center; gap:var(--space-16);
+}
+.card-icon {
+    width:80px; height:80px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    margin-bottom:8px; color:#fff;
+}
+
+::deep .card-title { color:var(--color-text-primary); font-weight:700; margin:0; }
+::deep .card-description { color:var(--color-text-secondary); opacity:.9; text-align:center; line-height:1.5; margin:0; }
+.card-stats { margin-top:8px; }
+
+::deep .glass-card.glass-interactive:hover { box-shadow: var(--elevation-3), var(--glass-inset-highlight); }
+::deep .glass-card.glass-interactive:active { box-shadow: var(--elevation-1); }

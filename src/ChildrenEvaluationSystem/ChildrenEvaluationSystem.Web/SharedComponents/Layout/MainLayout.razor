@@ -10,14 +10,13 @@
 @inject NavigationManager Navigation
 @inject IAuthenticationService AuthenticationService
 
-
 <CascadingAuthenticationState>
-    <MudThemeProvider Theme="MyCustomTheme"/>
+    <MudThemeProvider Theme="MyCustomTheme" />
     <MudPopoverProvider/>
     <MudDialogProvider/>
     <MudSnackbarProvider/>
 
-    <div class="page-background-class">
+    <div class="page-background-class bg--app-gradient">
         <MudLayout>
             <AuthorizeView>
                 <Authorized>
@@ -27,8 +26,7 @@
                         <MudSpacer/>
                         <MudText Class="mt-16 mr-4">Witaj, @AuthenticationService.GetUsername()</MudText>
                         <MudLink Href="https://github.com/PiotrApriasz?tab=repositories">
-                            <MudIconButton Icon="@Icons.Custom.Brands.GitHub" aria-label="github" Class="mr-16 mt-16"
-                                           Size="Size.Large"></MudIconButton>
+                            <MudIconButton Icon="@Icons.Custom.Brands.GitHub" aria-label="github" Class="mr-16 mt-16" Size="Size.Large" />
                         </MudLink>
                     </MudAppBar>
                 </Authorized>
@@ -37,20 +35,14 @@
                         <MudImage Src="images/mainLogo.png" Alt="Logo" Class="ml-16 mt-16" Height="50" Width="50"/>
                         <MudText Typo="Typo.h5" Class="ml-3 mt-16 menubar-title">System oceny przedszkolnej</MudText>
                         <MudSpacer/>
-                        <MudLink Href="https://github.com/PiotrApriasz?tab=repositories">
-                            <MudIconButton Icon="@Icons.Custom.Brands.GitHub" aria-label="github" Class="mr-16 mt-16"
-                                           Size="Size.Large"></MudIconButton>
-                        </MudLink>
                     </MudAppBar>
                 </NotAuthorized>
             </AuthorizeView>
             <MudMainContent>
                 <ErrorBoundary>
-                    <ChildContent>
-                        @Body
-                    </ChildContent>
+                    <ChildContent>@Body</ChildContent>
                     <ErrorContent Context="ex">
-                        <Error Exception="@ex"></Error>
+                        <Error Exception="@ex" />
                     </ErrorContent>
                 </ErrorBoundary>
             </MudMainContent>
@@ -58,40 +50,35 @@
     </div>
 </CascadingAuthenticationState>
 
-
-
 @code {
-    
     MudTheme MyCustomTheme = new MudTheme()
     {
         Typography = new Typography()
         {
             Default = new DefaultTypography()
             {
-                FontFamily = ["Nunito", "system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"]
+                FontFamily = ["Nunito","system-ui","-apple-system","Segoe UI","Roboto","Helvetica Neue","Arial","sans-serif"]
             },
             H5 = new H5Typography()
             {
-                FontFamily = ["Nunito", "system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"],
-                FontSize = "25px",
-                FontWeight = "700",
-                LetterSpacing = "0.2px",
+                FontFamily = ["Nunito","system-ui","-apple-system","Segoe UI","Roboto","Helvetica Neue","Arial","sans-serif"], 
+                FontSize = "25px", 
+                FontWeight = "700", 
+                LetterSpacing = "0.2px"
             },
             Button = new ButtonTypography()
             {
-                FontFamily = ["Nunito", "system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"],
-                FontSize = "17px",
-                FontWeight = "600",
+                FontFamily = ["Nunito","system-ui","-apple-system","Segoe UI","Roboto","Helvetica Neue","Arial","sans-serif"], 
+                FontSize = "17px", 
+                FontWeight = "600", 
                 LetterSpacing = "0.3px"
             }
         },
         PaletteLight = new PaletteLight()
         {
-            AppbarBackground = "#EAE2D7", 
-            TextPrimary = "#4B3A2A",      
-            TextSecondary = "#5A4633"     
+            AppbarBackground = "#EAE2D7",
+            TextPrimary = "#4B3A2A",
+            TextSecondary = "#5A4633"
         }
     };
-
-
 }

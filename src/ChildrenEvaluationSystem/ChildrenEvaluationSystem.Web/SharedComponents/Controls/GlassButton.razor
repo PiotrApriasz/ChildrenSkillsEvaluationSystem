@@ -1,184 +1,56 @@
+@using ChildrenEvaluationSystem.Web.SharedComponents.Values
+@using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.Components.Web
 @using MudBlazor
 
-<MudButton Variant="@Variant"
-           Color="@Color"
-           Size="@Size"
-           Class="@($"{GetButtonClass()} {Class}")"
-           OnClick="@OnClick"
-           FullWidth="@FullWidth"
-           Disabled="@Disabled">
+<button class="@BuildClass()"
+        disabled="@Disabled"
+        type="@HtmlButtonType"
+        @onclick="OnClick"
+        @attributes="AdditionalAttributes">
     @ChildContent
-</MudButton>
+</button>
 
 @code {
     [Parameter] public RenderFragment? ChildContent { get; set; }
+    
     [Parameter] public Variant Variant { get; set; } = Variant.Filled;
     [Parameter] public Color Color { get; set; } = Color.Primary;
+
     [Parameter] public Size Size { get; set; } = Size.Large;
-    [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
     [Parameter] public bool FullWidth { get; set; } = true;
-    [Parameter] public ButtonStyles ButtonStyle { get; set; } = ButtonStyles.Primary;
-    [Parameter] public string Class { get; set; } = string.Empty;
     [Parameter] public bool Disabled { get; set; }
+    [Parameter] public string? Class { get; set; }
+    [Parameter] public EventCallback<MouseEventArgs> OnClick { get; set; }
+    [Parameter] public string Type { get; set; } = "button"; // "button" | "submit" | "reset"
+    [Parameter(CaptureUnmatchedValues = true)] public Dictionary<string, object>? AdditionalAttributes { get; set; }
 
-    private string GetButtonClass()
+    [Parameter] public ButtonStyles ButtonStyle { get; set; } = ButtonStyles.Primary;
+
+    private string BuildClass()
     {
-        return ButtonStyle switch
-        {
-            ButtonStyles.Primary => "glass-button-primary",
-            ButtonStyles.Secondary => "glass-button-secondary",
-            ButtonStyles.Transparent => "glass-button-transparent",
-            ButtonStyles.Glass => "glass-button-glass",
-            _ => "glass-button-primary"
-        };
+        var classes = new List<string> { "glass-button", "glass-interactive", GetButtonClass(), GetSizeClass() };
+        if (FullWidth) classes.Add("btn-fw");
+        if (Disabled) classes.Remove("glass-interactive");
+        if (!string.IsNullOrWhiteSpace(Class)) classes.Add(Class);
+        return string.Join(" ", classes);
     }
-}
 
-@code {
-    public enum ButtonStyles
+    private string GetButtonClass() => ButtonStyle switch
     {
-        Primary,
-        Secondary,
-        Transparent,
-        Glass
-    }
+        ButtonStyles.Primary => "glass-button-primary",
+        ButtonStyles.Secondary => "glass-button-secondary",
+        ButtonStyles.Transparent => "glass-button-transparent",
+        ButtonStyles.Glass => "glass-button-glass",
+        _ => "glass-button-primary"
+    };
+
+    private string GetSizeClass() => Size switch
+    {
+        Size.Small => "btn-sm",
+        Size.Medium => "btn-md",
+        _ => "btn-lg"
+    };
+
+    private string HtmlButtonType => Type is "submit" or "reset" or "button" ? Type : "button";
 }
-
-<style>
-
-    .glass-button-primary {
-        background: linear-gradient(135deg, #C7B299 0%, #B8A082 100%) !important;
-        color: white !important;
-        border-radius: 12px !important;
-        font-weight: 600 !important;
-        text-transform: none !important;
-        box-shadow:
-            0 4px 16px rgba(199, 178, 153, 0.3),
-            0 2px 8px rgba(0, 0, 0, 0.1) !important;
-        border: none !important;
-        transform: translateY(0);
-        transition: all 0.15s ease !important;
-    }
-
-    .glass-button-primary:hover {
-        background: linear-gradient(135deg, #B8A082 0%, #A68B6B 100%) !important;
-        transform: translateY(-2px);
-        box-shadow:
-            0 6px 20px rgba(199, 178, 153, 0.4),
-            0 4px 12px rgba(0, 0, 0, 0.15) !important;
-    }
-
-    .glass-button-primary:active {
-        transform: translateY(2px) !important;
-        background: linear-gradient(135deg, #A68B6B 0%, #956F54 100%) !important;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
-        transition: all 0.1s ease !important;
-    }
-
-    .glass-button-secondary {
-        background: rgba(255, 255, 255, 0.6) !important;
-        backdrop-filter: blur(10px) !important;
-        border: 1px solid rgba(255, 255, 255, 0.3) !important;
-        color: #4B3A2A !important;
-        border-radius: 12px !important;
-        font-weight: 600 !important;
-        text-transform: none !important;
-        transform: translateY(0);
-        transition: all 0.15s ease !important;
-    }
-
-    .glass-button-secondary:hover {
-        background: rgba(255, 255, 255, 0.8) !important;
-        border-color: rgba(255, 255, 255, 0.5) !important;
-        transform: translateY(-2px);
-    }
-
-    .glass-button-secondary:active {
-        transform: translateY(2px) !important;
-        background: rgba(255, 255, 255, 0.9) !important;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
-        transition: all 0.1s ease !important;
-    }
-
-    .glass-button-transparent {
-        background: transparent !important;
-        border: none !important;
-        color: #4B3A2A !important;
-        border-radius: 12px !important;
-        font-weight: 600 !important;
-        text-transform: none !important;
-        transform: translateY(0);
-        transition: all 0.15s ease !important;
-        backdrop-filter: none !important;
-        width: auto !important;
-        min-width: auto !important;
-        white-space: nowrap !important;
-    }
-
-    .glass-button-transparent:hover {
-        background: rgba(255, 255, 255, 0.2) !important;
-        transform: translateY(-2px);
-        backdrop-filter: blur(5px) !important;
-    }
-
-    .glass-button-transparent:active {
-        transform: translateY(2px) !important;
-        background: rgba(255, 255, 255, 0.3) !important;
-        transition: all 0.1s ease !important;
-    }
-
-
-    .glass-button-glass {
-        background: rgba(255, 255, 255, 0.25) !important;
-        backdrop-filter: blur(20px) !important;
-        -webkit-backdrop-filter: blur(20px) !important;
-        border: 1px solid rgba(255, 255, 255, 0.2) !important;
-        border-radius: 16px !important;
-        color: #4B3A2A !important;
-        font-weight: 600 !important;
-        text-transform: none !important;
-        box-shadow:
-            0 8px 32px rgba(0, 0, 0, 0.1),
-            0 2px 16px rgba(0, 0, 0, 0.05),
-            inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
-        position: relative;
-        overflow: hidden;
-        transform: translateY(0);
-        transition: all 0.15s ease !important;
-        padding: 16px 20px !important;
-        min-height: 56px !important;
-    }
-
-    .glass-button-glass::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 1px;
-        background: linear-gradient(90deg,
-        transparent,
-        rgba(255, 255, 255, 0.4),
-        transparent);
-    }
-
-    .glass-button-glass:hover {
-        background: rgba(255, 255, 255, 0.35) !important;
-        border-color: rgba(255, 255, 255, 0.3) !important;
-        transform: translateY(-2px);
-        box-shadow:
-            0 12px 40px rgba(0, 0, 0, 0.15),
-            0 4px 20px rgba(0, 0, 0, 0.08),
-            inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
-    }
-
-    .glass-button-glass:active {
-        transform: translateY(1px) !important;
-        background: rgba(255, 255, 255, 0.45) !important;
-        box-shadow:
-            0 4px 20px rgba(0, 0, 0, 0.1),
-            0 2px 12px rgba(0, 0, 0, 0.05) !important;
-        transition: all 0.1s ease !important;
-    }
-</style>

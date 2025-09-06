@@ -6,7 +6,10 @@
 @using MudBlazor
 @using ChildrenEvaluationSystem.Web.SharedComponents.Widgets
 @using ChildrenEvaluationSystem.Web.SharedComponents.Controls
+@using Microsoft.AspNetCore.Components.Web
 @using Microsoft.JSInterop
+@using ChildrenEvaluationSystem.Web.SharedComponents.Values
+@using ChildrenEvaluationSystem.Web.Features.Welcome.Components
 
 @inject NavigationManager Navigation
 @inject Application.Interfaces.IAuthenticationService AuthenticationService
@@ -25,50 +28,44 @@
                 <div class="login-form">
                     <GlassTextField @bind-Value="Email"
                                     Label="Email"
-                                    InputType="InputType.Text" 
+                                    InputType="InputType.Text"
                                     HasError="@(!string.IsNullOrEmpty(EmailError))"
                                     ErrorText="@EmailError" />
 
                     <GlassTextField @bind-Value="Password"
                                     Label="Hasło"
-                                    InputType="InputType.Password" 
+                                    InputType="InputType.Password"
                                     HasError="@(!string.IsNullOrEmpty(PasswordError))"
                                     ErrorText="@PasswordError" />
 
                     <div class="button-group">
-                        <GlassButton OnClick="HandleLogin" ButtonStyle="GlassButton.ButtonStyles.Primary"
+                        <GlassButton OnClick="HandleLogin"
+                                     ButtonStyle="ButtonStyles.Primary"
                                      Class="@((IsValid ? "" : "disabled"))"
                                      Disabled="@(!IsValid)">Zaloguj się</GlassButton>
-                        <GlassButton Class="mt-6" OnClick="HandleRegister" 
-                                     ButtonStyle="GlassButton.ButtonStyles.Secondary">Utwórz konto</GlassButton>
+                        <GlassButton Class="mt-6"
+                                     OnClick="HandleRegister"
+                                     ButtonStyle="ButtonStyles.Secondary">Utwórz konto</GlassButton>
                     </div>
                 </div>
             </div>
         </GlassCard>
+
         <div class="auth-divider">
             <span>lub skorzystaj z jednego z poniższych dostawców</span>
         </div>
 
         <div class="external-auth-container">
             <div class="external-auth-buttons">
-                <GlassButton ButtonStyle="GlassButton.ButtonStyles.Glass"
-                             OnClick="@(() => AuthenticationService.LoginAsync(new Uri(Navigation.Uri).PathAndQuery))"
-                             Class="external-auth-button">
-                    <div class="auth-button-content">
-                        <MudIcon Icon="@MicrosoftIcon" Class="auth-icon"/>
-                        <span>Microsoft</span>
-                    </div>
-                </GlassButton>
-
-                <GlassButton ButtonStyle="GlassButton.ButtonStyles.Glass"
-                             Class="external-auth-button"
-                             OnClick="@(() => AuthenticationService.LogoutAsync(new Uri(Navigation.Uri).PathAndQuery))">
-                    <div class="auth-button-content">
-                        <MudIcon Icon="@GoogleIcon" Class="auth-icon"/>
-                        <span>Google</span>
-                    </div>
-                </GlassButton>
+                <ExternalAuthButton
+                    Icon="@MicrosoftIcon"
+                    Text="Microsoft"
+                    OnClick="@(() => AuthenticationService.LoginAsync(new Uri(Navigation.Uri).PathAndQuery))" />
+                <ExternalAuthButton
+                    Icon="@GoogleIcon"
+                    Text="Google"
+                    OnClick="@(() => AuthenticationService.LogoutAsync(new Uri(Navigation.Uri).PathAndQuery))" />
             </div>
         </div>
     </div>
-</div>   
+</div>

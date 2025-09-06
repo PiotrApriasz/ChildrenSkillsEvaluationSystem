@@ -1,0 +1,75 @@
+.glass-button {
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    cursor:pointer; user-select:none; border:none; outline:none; background:transparent;
+    font-weight:600; line-height:1; -webkit-tap-highlight-color:transparent;
+}
+.glass-button:focus-visible { box-shadow: var(--focus-ring); }
+
+.btn-sm { padding:8px 12px; min-height:36px; font-size:.95rem; }
+.btn-md { padding:12px 16px; min-height:44px; font-size:1rem; }
+.btn-lg { padding:var(--space-16) var(--space-20); min-height:var(--min-h-button-lg); font-size:1.0625rem; }
+.btn-fw { width:100%; }
+
+.glass-button-primary {
+    background:linear-gradient(135deg,var(--accent-1-0) 0%,var(--accent-1-1) 100%) !important;
+    color:#fff !important; border-radius:var(--radius-sm) !important; border:none !important;
+    box-shadow: var(--shadow-accent-1), var(--elevation-1) !important;
+}
+.glass-button-primary:hover {
+    background:linear-gradient(135deg,var(--accent-1-2) 0%,var(--accent-1-1) 100%) !important;
+    box-shadow: var(--shadow-accent-2), var(--elevation-2) !important;
+}
+.glass-button-primary:active {
+    background:linear-gradient(135deg,var(--accent-1-2) 0%,var(--accent-1-3) 100%) !important;
+    box-shadow: var(--elevation-1) !important;
+}
+
+.glass-button-secondary {
+    background: var(--translucent-weak) !important;
+    color: var(--color-text-primary) !important;
+    border:1px solid var(--translucent-border) !important;
+    border-radius: var(--radius-sm) !important;
+    backdrop-filter: blur(var(--glass-blur-sm)) !important;
+    -webkit-backdrop-filter: blur(var(--glass-blur-sm)) !important;
+}
+.glass-button-secondary:hover {
+    background: var(--translucent-mid) !important;
+    border-color: var(--translucent-border-hover) !important;
+}
+.glass-button-secondary:active {
+    background: var(--translucent-strong) !important;
+}
+
+.glass-button-transparent {
+    background: transparent !important;
+    border:none !important;
+    color: var(--color-text-primary) !important;
+    border-radius: var(--radius-sm) !important;
+    width:auto !important; min-width:auto !important; white-space:nowrap !important;
+}
+.glass-button-transparent:hover { background: rgba(255,255,255,.2) !important; backdrop-filter: blur(var(--glass-blur-xs)) !important; }
+.glass-button-transparent:active { background: rgba(255,255,255,.3) !important; }
+
+.glass-button-glass {
+    background: var(--glass-bg) !important;
+    border:1px solid var(--glass-border) !important;
+    backdrop-filter: blur(var(--glass-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--glass-blur)) !important;
+    border-radius: var(--radius-md) !important;
+    color: var(--color-text-primary) !important;
+    box-shadow: var(--elevation-2), var(--glass-inset-highlight) !important;
+    position:relative; overflow:hidden;
+}
+.glass-button-glass::before {
+    content:""; position:absolute; top:0; left:0; right:0; height:1px;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);
+}
+.glass-button-glass:hover {
+    background: var(--glass-bg-hover) !important;
+    border-color: var(--glass-border-hover) !important;
+    box-shadow: var(--elevation-3), var(--glass-inset-highlight) !important;
+}
+.glass-button-glass:active {
+    background: var(--glass-bg-active) !important;
+    box-shadow: var(--elevation-1) !important;
+}

@@ -1,0 +1,58 @@
+/* base glass surface */
+.glass-surface {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+}
+
+/* weaker glass surface */
+.glass-surface-weak {
+    background: var(--translucent-weak);
+    border: 1px solid var(--translucent-border);
+    backdrop-filter: blur(var(--glass-blur-sm));
+    -webkit-backdrop-filter: blur(var(--glass-blur-sm));
+}
+
+.glass-interactive {
+    transition: transform .15s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease;
+    transform: translateY(0);
+}
+.glass-interactive:hover { transform: translateY(-2px); }
+.glass-interactive:active { transform: translateY(1px); }
+
+/* shadow levels for glass elements */
+.glass-elevation-1 { box-shadow: var(--elevation-1), var(--glass-inset-highlight); }
+.glass-elevation-2 { box-shadow: var(--elevation-2), var(--glass-inset-highlight); }
+.glass-elevation-3 { box-shadow: var(--elevation-3), var(--glass-inset-highlight); }
+
+/* backgrounds for variants */
+.glass-bg-hover { background: var(--glass-bg-hover) !important; }
+.glass-bg-active { background: var(--glass-bg-active) !important; }
+
+/* blurr helper */
+.backdrop-blur-xs { backdrop-filter: blur(var(--glass-blur-xs)); -webkit-backdrop-filter: blur(var(--glass-blur-xs)); }
+.backdrop-blur-sm { backdrop-filter: blur(var(--glass-blur-sm)); -webkit-backdrop-filter: blur(var(--glass-blur-sm)); }
+.backdrop-blur-lg { backdrop-filter: blur(var(--glass-blur)); -webkit-backdrop-filter: blur(var(--glass-blur)); }
+
+/* top glossy */
+.has-top-gloss { position: relative; overflow: hidden; }
+.has-top-gloss::before {
+    content: "";
+    position: absolute; left: 0; right: 0; top: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.4), transparent);
+    pointer-events: none;
+}
+
+
+.rounded-sm { border-radius: var(--radius-sm); }
+.rounded-md { border-radius: var(--radius-md); }
+.rounded-lg { border-radius: var(--radius-lg); }
+
+
+.glass-interactive {
+    transition: transform .15s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease;
+    transform: translateY(0);
+}
+.glass-interactive:hover { transform: translateY(-2px); }
+.glass-interactive:active { transform: translateY(1px); }

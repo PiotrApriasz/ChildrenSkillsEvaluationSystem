@@ -1,19 +1,18 @@
 ﻿@page "/Home"
 
+@rendermode InteractiveServer
+
 @using MudBlazor
 @using ChildrenEvaluationSystem.Web.SharedComponents.Widgets
 @using ChildrenEvaluationSystem.Web.SharedComponents.Controls
+@using ChildrenEvaluationSystem.Web.SharedComponents.Values
 @using static Microsoft.AspNetCore.Components.Web.RenderMode
-@using Microsoft.AspNetCore.Components.Authorization
 @using IAuthenticationService = ChildrenEvaluationSystem.Application.Interfaces.IAuthenticationService
 @using Microsoft.AspNetCore.Components.Web
 
 @inject NavigationManager Navigation
 @inject IAuthenticationService AuthenticationService
 
-@rendermode InteractiveServer
-
-<PageTitle>System oceny przedszkolnej - Panel główny</PageTitle>
 
 <div class="home-container">
     <div class="home-header">
@@ -25,83 +24,50 @@
         </MudText>
     </div>
 
-    <div class="cards-grid">
-        <div class="home-card" @onclick="@(NavigateToGroups)">
-            <GlassCard MaxWidth="100%" Padding="32px">
-                <div class="card-content">
-                    <div class="card-icon groups-icon">
-                        <MudIcon Icon="@Icons.Material.Filled.Groups" Size="Size.Large" />
-                    </div>
-                    <MudText Typo="Typo.h5" Class="card-title">Grupy</MudText>
-                    <MudText Typo="Typo.body2" Class="card-description">
-                        Zarządzaj grupami przedszkolnymi, dodawaj nowe klasy i przypisuj dzieci
-                    </MudText>
-                    <div class="card-stats">
-                        <MudChip T="string" Color="Color.Primary" Size="Size.Small" Variant="Variant.Text">
-                            <MudIcon Icon="@Icons.Material.Filled.School" Size="Size.Small" Class="mr-1" />
-                            5 aktywnych grup
-                        </MudChip>
-                    </div>
-                </div>
-            </GlassCard>
-        </div>
+    <div class="cards-grid grid-auto-cards">
+        <FeatureCard Title="Grupy"
+                     Description="Zarządzaj listą grup i przypisaniami."
+                     Icon="@Icons.Material.Filled.Groups"
+                     ChipText="8 aktywnych"
+                     ChipIcon="@Icons.Material.Filled.ListAlt"
+                     ChipColor="Color.Primary"
+                     IconBackgroundClass="gradient--primary"
+                     OnClick="NavigateToGroups" />
 
-        <div class="home-card" @onclick="NavigateToChildren">
-            <GlassCard MaxWidth="100%" Padding="32px">
-                <div class="card-content">
-                    <div class="card-icon children-icon">
-                        <MudIcon Icon="@Icons.Material.Filled.ChildCare" Size="Size.Large" />
-                    </div>
-                    <MudText Typo="Typo.h5" Class="card-title">Dzieci</MudText>
-                    <MudText Typo="Typo.body2" Class="card-description">
-                        Przeglądaj profile dzieci, dodawaj nowe i zarządzaj danymi osobowymi
-                    </MudText>
-                    <div class="card-stats">
-                        <MudChip T="string" Color="Color.Secondary" Size="Size.Small" Variant="Variant.Text">
-                            <MudIcon Icon="@Icons.Material.Filled.Person" Size="Size.Small" Class="mr-1" />
-                            42 dzieci
-                        </MudChip>
-                    </div>
-                </div>
-            </GlassCard>
-        </div>
+        <FeatureCard Title="Dzieci"
+                     Description="Przeglądaj profile oraz historię obserwacji."
+                     Icon="@Icons.Material.Filled.ChildCare"
+                     ChipText="112 dzieci"
+                     ChipIcon="@Icons.Material.Filled.Person"
+                     ChipColor="Color.Secondary"
+                     IconBackgroundClass="gradient--children"
+                     OnClick="NavigateToChildren" />
 
-        <div class="home-card" @onclick="NavigateToDiagnoses">
-            <GlassCard MaxWidth="100%" Padding="32px">
-                <div class="card-content">
-                    <div class="card-icon diagnoses-icon">
-                        <MudIcon Icon="@Icons.Material.Filled.Assignment" Size="Size.Large" />
-                    </div>
-                    <MudText Typo="Typo.h5" Class="card-title">Diagnozy</MudText>
-                    <MudText Typo="Typo.body2" Class="card-description">
-                        Twórz i przeglądaj diagnozy rozwoju dzieci, generuj raporty
-                    </MudText>
-                    <div class="card-stats">
-                        <MudChip T="string" Color="Color.Tertiary" Size="Size.Small" Variant="Variant.Text">
-                            <MudIcon Icon="@Icons.Material.Filled.Analytics" Size="Size.Small" Class="mr-1" />
-                            15 diagnoz
-                        </MudChip>
-                    </div>
-                </div>
-            </GlassCard>
-        </div>
+        <FeatureCard Title="Diagnozy"
+                     Description="Twórz i przeglądaj diagnozy rozwojowe."
+                     Icon="@Icons.Material.Filled.Assignment"
+                     ChipText="15 diagnoz"
+                     ChipIcon="@Icons.Material.Filled.Analytics"
+                     ChipColor="Color.Tertiary"
+                     IconBackgroundClass="gradient--diagnoses"
+                     OnClick="NavigateToDiagnoses" />
     </div>
 
-    <div class="quick-actions">
+    <div class="quick-actions top-divider">
         <MudText Typo="Typo.h6" Class="quick-actions-title">Szybkie akcje</MudText>
         <div class="quick-actions-buttons">
-            <GlassButton ButtonStyle="GlassButton.ButtonStyles.Secondary" 
-                         FullWidth="false" 
+            <GlassButton ButtonStyle="ButtonStyles.Glass"
+                         FullWidth="false"
                          Size="Size.Medium"
-                         OnClick="@NavigateToQuickActionChilderAdd">
+                         OnClick="NavigateToQuickActionChildAdd">
                 <MudIcon Icon="@Icons.Material.Filled.PersonAdd" Class="mr-2" />
                 Dodaj dziecko
             </GlassButton>
-            
-            <GlassButton ButtonStyle="GlassButton.ButtonStyles.Secondary" 
-                         FullWidth="false" 
+
+            <GlassButton ButtonStyle="ButtonStyles.Glass"
+                         FullWidth="false"
                          Size="Size.Medium"
-                         OnClick="@NavigateToQuickActionNewDiagnosis">
+                         OnClick="NavigateToQuickActionNewDiagnosis">
                 <MudIcon Icon="@Icons.Material.Filled.NoteAdd" Class="mr-2" />
                 Nowa diagnoza
             </GlassButton>
@@ -110,175 +76,33 @@
 </div>
 
 @code {
-    private void NavigateToGroups()
-    {
-        Navigation.NavigateTo("/groups");
-    }
-
-    private void NavigateToChildren()
-    {
-        Navigation.NavigateTo("/children");
-    }
-
-    private void NavigateToDiagnoses()
-    {
-        Navigation.NavigateTo("/diagnoses");
-    }
-    
-    private void NavigateToQuickActionChilderAdd()
-    {
-        Navigation.NavigateTo("/children/add");
-    }
-    
-    private void NavigateToQuickActionNewDiagnosis()
-    {
-        Navigation.NavigateTo("/diagnoses/new");
-        Console.WriteLine("GOOOOOOOWWWWNo");
-    }
+    private void NavigateToGroups() => Navigation.NavigateTo("/groups");
+    private void NavigateToChildren() => Navigation.NavigateTo("/children");
+    private void NavigateToDiagnoses() => Navigation.NavigateTo("/diagnoses");
+    private void NavigateToQuickActionChildAdd() => Navigation.NavigateTo("/children/add");
+    private void NavigateToQuickActionNewDiagnosis() => Navigation.NavigateTo("/diagnoses/new");
 }
 
 <style>
-    .home-container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 100px 20px;
+    .home-container { max-width:1200px; margin:0 auto; padding:100px 20px 80px; }
+    .home-header { text-align:center; margin-bottom:48px; }
+
+    .welcome-title { color:var(--color-text-primary); font-weight:700; margin-bottom:12px; }
+    .welcome-subtitle { color:var(--color-text-secondary); opacity:.8; }
+
+    .cards-grid { margin-bottom:56px; }
+
+    .quick-actions { text-align:center; padding-top:var(--space-24); }
+    .quick-actions-title { color:var(--color-text-primary); margin-bottom:var(--space-24); font-weight:600; }
+
+    .quick-actions-buttons { display:flex; gap:var(--space-16); justify-content:center; flex-wrap:wrap; }
+
+    @@media (max-width:900px){
+    .home-container { padding:72px 20px 56px; }
     }
-
-    .home-header {
-        text-align: center;
-        margin-bottom: 48px;
-    }
-
-    .welcome-title {
-        color: #4B3A2A;
-        font-weight: 700;
-        margin-bottom: 12px;
-    }
-
-    .welcome-subtitle {
-        color: #5A4633;
-        opacity: 0.8;
-    }
-
-    .cards-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        gap: 32px;
-        margin-bottom: 48px;
-    }
-
-    .home-card {
-        cursor: pointer;
-        transform: translateY(0);
-        transition: all 0.15s ease;
-        border-radius: 24px;
-        box-shadow:
-            0 8px 32px rgba(0, 0, 0, 0.1),
-            0 2px 16px rgba(0, 0, 0, 0.05);
-    }
-
-    .home-card:hover {
-        transform: translateY(-2px);
-        box-shadow:
-            0 12px 40px rgba(0, 0, 0, 0.15),
-            0 4px 20px rgba(0, 0, 0, 0.08);
-    }
-
-    .home-card:active {
-        transform: translateY(2px);
-        transition: all 0.1s ease;
-        box-shadow:
-            0 4px 20px rgba(0, 0, 0, 0.1),
-            0 2px 12px rgba(0, 0, 0, 0.05);
-    }
-
-    .card-content {
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 16px;
-    }
-
-    .card-icon {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 8px;
-    }
-
-    .groups-icon {
-        background: linear-gradient(135deg, #C7B299 0%, #B8A082 100%);
-        color: white;
-    }
-
-    .children-icon {
-        background: linear-gradient(135deg, #FFB4A2 0%, #FF9A85 100%);
-        color: white;
-    }
-
-    .diagnoses-icon {
-        background: linear-gradient(135deg, #A8D8EA 0%, #7FB3D3 100%);
-        color: white;
-    }
-
-    .card-title {
-        color: #4B3A2A;
-        font-weight: 700;
-        margin: 0;
-    }
-
-    .card-description {
-        color: #5A4633;
-        opacity: 0.9;
-        text-align: center;
-        line-height: 1.5;
-        margin: 0;
-    }
-
-    .card-stats {
-        margin-top: 8px;
-    }
-
-    .quick-actions {
-        text-align: center;
-        padding-top: 24px;
-        border-top: 1px solid rgba(75, 58, 42, 0.1);
-    }
-
-    .quick-actions-title {
-        color: #4B3A2A;
-        margin-bottom: 24px;
-        font-weight: 600;
-    }
-
-    .quick-actions-buttons {
-        display: flex;
-        gap: 16px;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-
-    @@media (max-width: 768px) {
-        .home-container {
-            padding: 24px 16px;
-        }
-
-        .cards-grid {
-            grid-template-columns: 1fr;
-            gap: 24px;
-        }
-
-        .quick-actions-buttons {
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .welcome-title {
-            font-size: 1.8rem;
-        }
+    @@media (max-width:640px){
+    .home-container { padding:48px 16px 48px; }
+    .quick-actions-buttons { flex-direction:column; align-items:stretch; }
+    :.welcome-title { font-size:1.9rem; }
     }
 </style>
