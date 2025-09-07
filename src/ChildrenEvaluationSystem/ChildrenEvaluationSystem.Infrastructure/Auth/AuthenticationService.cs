@@ -31,7 +31,7 @@ public class AuthenticationService(IHttpContextAccessor httpContextAccessor, Nav
     public bool IsAuthenticatedAsync()
         => httpContextAccessor.HttpContext?.User?.Identity?.IsAuthenticated ?? false;
 
-    public ClaimsIdentity? GetUserIdentityAsClaims()
+    private ClaimsIdentity? GetUserIdentityAsClaims()
         => httpContextAccessor.HttpContext?.User.Identity as ClaimsIdentity;
 
     public string GetUsername()

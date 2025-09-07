@@ -11,13 +11,11 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="MediatR" Version="13.0.0" />
       <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="9.0.8" />
       <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
+      <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.53.1" />
       <PackageReference Include="Microsoft.Identity.Web" Version="3.13.2" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Database\" />
     </ItemGroup>
 
 </Project>

@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChildrenEvaluationSystem.Ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChildrenEvaluationSystem.Infrastructure", "ChildrenEvaluationSystem.Infrastructure\ChildrenEvaluationSystem.Infrastructure.csproj", "{3969D150-4C6F-4A11-ACC4-9C4B2C86C12A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChildrenEvaluationSystem.Features", "ChildrenEvaluationSystem.Features\ChildrenEvaluationSystem.Features.csproj", "{FC751ED6-56BE-468E-81FC-2B1813AE8BC3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{3969D150-4C6F-4A11-ACC4-9C4B2C86C12A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3969D150-4C6F-4A11-ACC4-9C4B2C86C12A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3969D150-4C6F-4A11-ACC4-9C4B2C86C12A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC751ED6-56BE-468E-81FC-2B1813AE8BC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC751ED6-56BE-468E-81FC-2B1813AE8BC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC751ED6-56BE-468E-81FC-2B1813AE8BC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC751ED6-56BE-468E-81FC-2B1813AE8BC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
