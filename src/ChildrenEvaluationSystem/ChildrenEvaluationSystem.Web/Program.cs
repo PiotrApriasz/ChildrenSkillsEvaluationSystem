@@ -1,4 +1,10 @@
+using ChildrenEvaluationSystem.Application.Interfaces;
+using ChildrenEvaluationSystem.Features.Groups;
+using ChildrenEvaluationSystem.Infrastructure;
+using ChildrenEvaluationSystem.Infrastructure.Auth;
+using ChildrenEvaluationSystem.Infrastructure.Database;
 using ChildrenEvaluationSystem.Web.SharedComponents;
+using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -19,6 +25,8 @@ builder.Services.AddMudServices();
 
 builder.Services.AddControllersWithViews();
 
+// Add auth
+
 builder.Services
     .AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
     .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("AzureEntra"));
@@ -32,51 +40,63 @@ builder.Services.PostConfigure<OpenIdConnectOptions>(OpenIdConnectDefaults.Authe
         var idToken = await ctx.HttpContext.GetTokenAsync("id_token");
         if (!string.IsNullOrEmpty(idToken))
             ctx.ProtocolMessage.IdTokenHint = idToken;
-        
+                
         var loginHintClaim = ctx.HttpContext.User.FindFirst("login_hint");
         if (loginHintClaim != null && !string.IsNullOrEmpty(loginHintClaim.Value))
             ctx.ProtocolMessage.SetParameter("logout_hint", loginHintClaim.Value);
-        
+                
         if (string.IsNullOrEmpty(ctx.ProtocolMessage.ClientId))
             ctx.ProtocolMessage.ClientId = options.ClientId;
-        
+                
         var authority = options.Authority?.TrimEnd('/') ?? "";
         var baseAuth  = authority.EndsWith("/v2.0", StringComparison.OrdinalIgnoreCase)
             ? authority[..^"/v2.0".Length]
             : authority;
         ctx.ProtocolMessage.IssuerAddress = $"{baseAuth}/oauth2/v2.0/logout";
-        
+                
         var postLogout = builder.Configuration["AzureEntra:SignedOutRedirectUri"] ?? "/";
         ctx.ProtocolMessage.PostLogoutRedirectUri =
             $"{ctx.Request.Scheme}://{ctx.Request.Host}{postLogout}";
     };
-    
+            
     options.Scope.Add("openid");
     options.Scope.Add("profile");
 });
+    
+    builder.Services.Configure<CookieAuthenticationOptions>(
+        CookieAuthenticationDefaults.AuthenticationScheme, options =>
+        {
+            options.Cookie.Name = "ChildrenEvaluationSystem.Auth";
+            options.Cookie.HttpOnly = true;
+            options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+            options.Cookie.SameSite = SameSiteMode.None;
+            options.ExpireTimeSpan = TimeSpan.FromHours(1);
+            options.SlidingExpiration = true;
+        });
+
+    IdentityModelEventSource.LogCompleteSecurityArtifact = true;
+    IdentityModelEventSource.ShowPII = true;
+        
+    builder.Services.AddAuthorization();
+    builder.Services.AddCascadingAuthenticationState();
+
+// --------------
+
+//builder.Services.AddAuth(builder.Configuration.GetSection("AzureEntra"), builder.Configuration["AzureEntra:SignedOutRedirectUri"]);
 
 builder.Services.AddControllersWithViews()
     .AddMicrosoftIdentityUI();
 
-builder.Services.Configure<CookieAuthenticationOptions>(
-    CookieAuthenticationDefaults.AuthenticationScheme, options =>
-{
-    options.Cookie.Name = "ChildrenEvaluationSystem.Auth";
-    options.Cookie.HttpOnly = true;
-    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-    options.Cookie.SameSite = SameSiteMode.None;
-    options.ExpireTimeSpan = TimeSpan.FromHours(1);
-    options.SlidingExpiration = true;
-});
+builder.Services.AddCosmosDb(builder.Configuration.GetSection("CosmosDb"));
 
-IdentityModelEventSource.LogCompleteSecurityArtifact = true;
-IdentityModelEventSource.ShowPII = true;
-
-builder.Services.AddAuthorization();
-builder.Services.AddCascadingAuthenticationState();
-builder.Services.AddHttpContextAccessor();
-
+builder.Services.AddScoped<ICosmosContainerProvider, CosmosContainerProvider>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+builder.Services.AddScoped(typeof(IRepository<>), typeof(CosmosRepository<>));
+
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateGroupCommand).Assembly));
+
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

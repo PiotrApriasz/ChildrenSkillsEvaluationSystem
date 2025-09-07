@@ -8,6 +8,5 @@ public class AssessmentTemplate : BaseEntity
     public required string Name { get; set; }
     public int Version { get; set; } = 1;
     public required List<TemplateField> Fields { get; set; }
-    public DateTimeOffset CreatedAt { get; set; }
     public TemplateState State { get; set; }
 }

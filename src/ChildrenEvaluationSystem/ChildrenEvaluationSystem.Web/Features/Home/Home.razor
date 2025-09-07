@@ -29,7 +29,7 @@
         <FeatureCard Title="Grupy"
                      Description="Zarządzaj listą grup i przypisaniami."
                      Icon="@Icons.Material.Filled.Groups"
-                     ChipText="8 aktywnych"
+                     ChipText=@($"{_groupsCount} grup")
                      ChipIcon="@Icons.Material.Filled.ListAlt"
                      ChipColor="Color.Primary"
                      IconBackgroundClass="gradient--primary"
@@ -75,14 +75,6 @@
         </div>
     </div>
 </div>
-
-@code {
-    private void NavigateToGroups() => Navigation.NavigateTo("/groups");
-    private void NavigateToChildren() => Navigation.NavigateTo("/children");
-    private void NavigateToDiagnoses() => Navigation.NavigateTo("/diagnoses");
-    private void NavigateToQuickActionChildAdd() => Navigation.NavigateTo("/children/add");
-    private void NavigateToQuickActionNewDiagnosis() => Navigation.NavigateTo("/diagnoses/new");
-}
 
 <style>
     .home-container { max-width:1200px; margin:0 auto; padding:100px 20px 80px; }

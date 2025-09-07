@@ -16,8 +16,7 @@
 
     <ItemGroup>
       <Folder Include="Features\Childrens\" />
-      <Folder Include="Features\Evaluation\" />
-      <Folder Include="Features\Groups\" />
+      <Folder Include="Features\Assessments\" />
       <Folder Include="Features\Home\Components\" />
       <Folder Include="wwwroot\images\" />
     </ItemGroup>
@@ -26,7 +25,9 @@
       <PackageReference Include="Azure.Identity" Version="1.15.0" />
       <PackageReference Include="Blazored.FluentValidation" Version="2.2.0" />
       <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
+      <PackageReference Include="MediatR" Version="13.0.0" />
       <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="9.0.8" />
+      <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.53.1" />
       <PackageReference Include="Microsoft.Identity.Web" Version="3.13.2" />
       <PackageReference Include="Microsoft.Identity.Web.UI" Version="3.13.2" />
       <PackageReference Include="MudBlazor" Version="8.11.0" />
@@ -34,6 +35,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ChildrenEvaluationSystem.Application\ChildrenEvaluationSystem.Application.csproj" />
+      <ProjectReference Include="..\ChildrenEvaluationSystem.Features\ChildrenEvaluationSystem.Features.csproj" />
       <ProjectReference Include="..\ChildrenEvaluationSystem.Infrastructure\ChildrenEvaluationSystem.Infrastructure.csproj" />
     </ItemGroup>
 
