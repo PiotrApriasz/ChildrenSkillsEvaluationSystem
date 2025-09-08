@@ -1,0 +1,40 @@
+@namespace ChildrenEvaluationSystem.Web.SharedComponents.Widgets
+@using MudBlazor
+
+<div class="gd-surface glass-card">
+    <div class="gd-header">
+        <MudText Typo="Typo.h6" Class="gd-title">@Title</MudText>
+
+        @if (ShowCloseButton)
+        {
+            <button type="button"
+                    class="gd-close glass-interactive"
+                    @onclick="HandleClose"
+                    aria-label="Zamknij">
+                <MudIcon Icon="@Icons.Material.Filled.Close" Size="Size.Small" />
+            </button>
+        }
+    </div>
+
+    <div class="gd-body">
+        @BodyContent
+    </div>
+
+    @if (ActionsContent is not null)
+    {
+        <div class="gd-actions">
+            @ActionsContent
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public string Title { get; set; } = string.Empty;
+    [Parameter] public RenderFragment? BodyContent { get; set; }
+    [Parameter] public RenderFragment? ActionsContent { get; set; }
+    [Parameter] public bool ShowCloseButton { get; set; } = true;
+
+    [CascadingParameter] private IMudDialogInstance Dialog { get; set; } = null!;
+
+    private void HandleClose() => Dialog.Cancel();
+}
