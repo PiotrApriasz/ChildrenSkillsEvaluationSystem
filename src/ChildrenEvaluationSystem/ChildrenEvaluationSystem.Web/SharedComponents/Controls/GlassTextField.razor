@@ -1,23 +1,22 @@
 @using MudBlazor
 
-<div class="gi-field @(IsRaised ? "gi-raised" : null)">
-    <input id="@Id"
-           class="gi-input @(HasError ? "gi-input-error" : null)" 
-           type="@HtmlType"
-           @bind-value="CurrentValue" @bind-value:event="oninput"
-           placeholder=" "
-           @onfocus="() => _isFocused = true"
-           @onblur="() => _isFocused = false"
-           aria-invalid="@HasError"
-           aria-describedby="@(HasError ? $"{Id}_err" : null)"
-           required="@Required" 
-           disabled="@Disabled"/>
-    
+<div class="@FieldClass">
     @if (!string.IsNullOrWhiteSpace(Label))
     {
         <label for="@Id" class="gi-label">@Label</label>
     }
-    
+
+    <input id="@Id"
+           class="gi-input @(HasError ? "gi-input-error" : null)"
+           type="@HtmlType"
+           @bind-value="CurrentValue" @bind-value:event="oninput"
+           aria-invalid="@HasError"
+           aria-describedby="@(HasError ? $"{Id}_err" : null)"
+           required="@Required"
+           disabled="@Disabled"
+           @onfocus="() => _isFocused = true"
+           @onblur="() => _isFocused = false" />
+
     @if (HasError && !string.IsNullOrWhiteSpace(ErrorText))
     {
         <div id="@($"{Id}_err")" class="gi-error">@ErrorText</div>
@@ -35,7 +34,6 @@
     [Parameter] public bool Disabled { get; set; }
 
     private bool _isFocused;
-    private bool IsRaised => _isFocused || !string.IsNullOrEmpty(Value);
     private string Id { get; } = $"gi_{Guid.NewGuid():N}";
     private string HtmlType => InputType switch {
         InputType.Password => "password",
@@ -43,7 +41,17 @@
         InputType.Number   => "number",
         _ => "text"
     };
-    
+
+    private string FieldClass => string.Join(" ",
+        new[]
+        {
+            "gi-field",
+            Disabled ? "gi-disabled" : null,
+            _isFocused ? "is-focused" : null,
+            !string.IsNullOrEmpty(Value) ? "has-value" : null,
+            HasError ? "gi-has-error" : null
+        }.Where(c => c is not null));
+
     private string CurrentValue
     {
         get => Value;
@@ -51,7 +59,7 @@
         {
             if (Value == value) return;
             Value = value;
-            _ = ValueChanged.InvokeAsync(value); 
+            _ = ValueChanged.InvokeAsync(value);
         }
     }
 }

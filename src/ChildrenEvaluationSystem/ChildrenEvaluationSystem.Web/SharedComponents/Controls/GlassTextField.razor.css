@@ -1,44 +1,129 @@
 .gi-field {
-    --gi-border-normal: var(--color-text-secondary);
-    --gi-border-focus:  var(--color-text-secondary);
-    --gi-radius: var(--radius-sm);
-    --gi-border-w: 1px;
-    --gi-border-w-focus: 2px;
-
-    position: relative; display: block;
-    border-radius: var(--gi-radius);
-    padding: 18px var(--space-16) 10px var(--space-16);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    position: relative;
+    width: 100%;
+    font: inherit;
+    color: var(--color-text-primary);
 }
 
-/* rama */
-.gi-field::before {
-    content: ""; position: absolute; inset: 0;
-    border-radius: var(--gi-radius);
-    border: var(--gi-border-w) solid var(--gi-border-normal);
-    pointer-events: none; transition: all .18s ease;
-}
-.gi-field:hover::before { border-color: rgba(199,178,153,.8); }
-.gi-field:focus-within::before {
-    border: var(--gi-border-w-focus) solid var(--gi-border-focus);
-    box-shadow: var(--focus-ring);
-}
 
-/* input */
-.gi-input {
-    width: 100%; border: none; outline: none; background: transparent;
-    font: inherit; color: inherit; padding: 6px 0;
-}
-
-/* label */
 .gi-label {
-    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
-    font-size: 1rem; color: var(--gi-border-normal);
-    pointer-events: none; transition: all .18s ease;
-}
-.gi-field:focus-within .gi-label, .gi-field.gi-raised .gi-label {
-    top: 0; transform: translateY(-50%) scale(.9); font-size: .8rem; color: var(--gi-border-focus);
+    font-size: .75rem;
+    font-weight: 600;
+    letter-spacing: .5px;
+    padding-left: 4px;
+    color: var(--color-text-secondary);
+    user-select: none;
+    transition: color .18s ease, opacity .18s ease;
 }
 
-/* error */
-.gi-error { margin-top:4px; font-size:.8rem; color: var(--color-danger); opacity:.95; }
-.gi-input-error { caret-color: var(--color-danger); }
+.gi-field.is-focused .gi-label {
+    color: var(--color-text-primary);
+}
+
+
+.gi-input {
+    width: 100%;
+    border: 1px solid rgba(255,255,255,.28);
+    background:
+            linear-gradient(to bottom, rgba(255,255,255,.55), rgba(255,255,255,.30));
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font: inherit;
+    color: inherit;
+    outline: none;
+
+    box-shadow:
+            inset 0 1px 2px rgba(0,0,0,.18),
+            inset 0 -1px 2px rgba(255,255,255,.45),
+            inset 0 -6px 12px rgba(255,255,255,.15),
+            0 1px 2px rgba(0,0,0,.05);
+    transition: background .22s ease,
+    border-color .22s ease,
+    box-shadow .22s ease,
+    color .22s ease;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+
+.gi-input:not(:disabled):hover {
+    background:
+            linear-gradient(to bottom, rgba(255,255,255,.62), rgba(255,255,255,.34));
+    box-shadow:
+            inset 0 1px 2px rgba(0,0,0,.20),
+            inset 0 -1px 2px rgba(255,255,255,.50),
+            inset 0 -8px 14px rgba(255,255,255,.18),
+            0 2px 4px rgba(0,0,0,.06);
+}
+
+
+.gi-field.is-focused .gi-input {
+    border-color: rgba(255,255,255,.38);
+    background:
+            linear-gradient(to bottom, rgba(255,255,255,.68), rgba(255,255,255,.36));
+    box-shadow:
+            inset 0 2px 3px rgba(0,0,0,.24),
+            inset 0 -1px 3px rgba(255,255,255,.55),
+            inset 0 -10px 18px rgba(255,255,255,.22),
+            0 0 0 2px rgba(199,178,153,.20),
+            0 4px 10px rgba(0,0,0,.10);
+}
+
+
+.gi-field.has-value:not(.is-focused) .gi-input {
+    border-color: rgba(255,255,255,.32);
+    background:
+            linear-gradient(to bottom, rgba(255,255,255,.58), rgba(255,255,255,.32));
+    box-shadow:
+            inset 0 1px 2px rgba(0,0,0,.18),
+            inset 0 -1px 2px rgba(255,255,255,.42),
+            inset 0 -6px 12px rgba(255,255,255,.14),
+            0 1px 2px rgba(0,0,0,.04);
+}
+
+
+.gi-field.gi-has-error .gi-input {
+    border-color: var(--color-danger);
+    box-shadow:
+            inset 0 1px 2px rgba(0,0,0,.22),
+            inset 0 -1px 2px rgba(255,255,255,.35),
+            0 0 0 1px rgba(179,38,30,.15);
+}
+
+.gi-input-error {
+    caret-color: var(--color-danger);
+}
+
+.gi-field.gi-disabled .gi-input {
+    background: linear-gradient(to bottom, rgba(255,255,255,.45), rgba(255,255,255,.28));
+    border-color: rgba(255,255,255,.22);
+    box-shadow:
+            inset 0 0 0 1px rgba(255,255,255,.18),
+            inset 0 1px 2px rgba(0,0,0,.08);
+    color: var(--color-text-secondary);
+    cursor: not-allowed;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.gi-field.gi-disabled .gi-label {
+    color: var(--color-text-secondary);
+    opacity: .65;
+}
+
+.gi-error {
+    font-size: .7rem;
+    line-height: 1.2;
+    color: var(--color-danger);
+    padding-left: 4px;
+    margin-top: 2px;
+}
+
+.gi-input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px rgba(255,255,255,.55) inset;
+    -webkit-text-fill-color: var(--color-text-primary);
+    transition: background-color 9999s ease-out;
+}
