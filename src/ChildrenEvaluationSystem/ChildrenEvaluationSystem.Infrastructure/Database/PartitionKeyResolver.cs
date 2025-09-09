@@ -12,7 +12,7 @@ public static class PartitionKeyResolver
             .Add(a.GroupId.ToString())
             .Add(a.UserId.ToString())
             .Build(),
-        Children c => new PartitionKeyBuilder()
+        Child c => new PartitionKeyBuilder()
             .Add(c.GroupId.ToString())
             .Add(c.UserId.ToString())
             .Build(),

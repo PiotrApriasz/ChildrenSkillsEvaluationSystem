@@ -1,0 +1,31 @@
+@using ChildrenEvaluationSystem.Web.SharedComponents.Controls
+@using ChildrenEvaluationSystem.Web.SharedComponents.Values
+@using MudBlazor
+@using ChildrenEvaluationSystem.Web.SharedComponents.Widgets
+
+<GlassDialogLayout Title="Utwórz nową grupę">
+    <BodyContent>
+        <GlassTextField @bind-Value="_name"
+                        Label="Nazwa grupy"
+                        Required="true"
+                        HasError="@(_hasTried && string.IsNullOrWhiteSpace(_name))"
+                        ErrorText="Nazwa jest wymagana" />
+    </BodyContent>
+
+    <ActionsContent>
+        <GlassButton ButtonStyle="ButtonStyles.Transparent"
+                     FullWidth="false"
+                     Size="Size.Medium"
+                     OnClick="Cancel">
+            Anuluj
+        </GlassButton>
+
+        <GlassButton ButtonStyle="ButtonStyles.Primary"
+                     FullWidth="false"
+                     Size="Size.Medium"
+                     Disabled="@string.IsNullOrWhiteSpace(_name)"
+                     OnClick="Submit">
+            Stwórz
+        </GlassButton>
+    </ActionsContent>
+</GlassDialogLayout>

@@ -15,7 +15,7 @@ public class CosmosRepository<T> : IRepository<T>
     private readonly Dictionary<Type,string> _containerMap = new()
     {
         { typeof(Group), "groups" },
-        { typeof(Children), "childrens" },
+        { typeof(Child), "childrens" },
         { typeof(AssessmentTemplate), "assessment-templates" },
         { typeof(Assessment), "assessments" }
     };

@@ -26,14 +26,14 @@
                 <div class="login-form">
                     <GlassTextField @bind-Value="Email"
                                     Label="Email"
-                                    Disabled="true"
+                                    Disabled="false"
                                     InputType="InputType.Text"
                                     HasError="@(!string.IsNullOrEmpty(EmailError))"
                                     ErrorText="@EmailError" />
 
                     <GlassTextField @bind-Value="Password"
                                     Label="Hasło"
-                                    Disabled="true"
+                                    Disabled="false"
                                     InputType="InputType.Password"
                                     HasError="@(!string.IsNullOrEmpty(PasswordError))"
                                     ErrorText="@PasswordError" />

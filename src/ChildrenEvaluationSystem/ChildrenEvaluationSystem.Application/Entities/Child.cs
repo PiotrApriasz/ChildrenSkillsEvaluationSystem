@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace ChildrenEvaluationSystem.Application.Entities;
 
-public class Children : BaseEntity
+public class Child : BaseEntity
 {
     [JsonProperty("groupId")]
     public required string GroupId { get; set; }

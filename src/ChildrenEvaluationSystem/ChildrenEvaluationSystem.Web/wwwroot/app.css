@@ -44,3 +44,9 @@ h1:focus {
 .form-floating > .form-control:focus::placeholder {
     text-align: start;
 }
+
+.glass-dialog-backdrop {
+    backdrop-filter: blur(1px) saturate(110%);
+    -webkit-backdrop-filter: blur(3px) saturate(110%);
+    background: rgba(8, 8, 12, .5) !important;
+}

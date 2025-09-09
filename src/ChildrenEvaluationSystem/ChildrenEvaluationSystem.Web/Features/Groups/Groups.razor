@@ -1,6 +1,73 @@
 @page "/Groups"
-<h3>Groups</h3>
 
-@code {
-    
-}
+@using MudBlazor
+@using ChildrenEvaluationSystem.Features.Groups
+@using ChildrenEvaluationSystem.Web.SharedComponents.Widgets
+@using ChildrenEvaluationSystem.Web.SharedComponents.Controls
+@using ChildrenEvaluationSystem.Web.SharedComponents.Values
+
+<div class="groups-container">
+    <div class="groups-header">
+        <MudText Typo="Typo.h4" Class="title">Twoje grupy</MudText>
+    </div>
+
+    @if (_loading)
+    {
+        <div class="loading-state">
+            <MudProgressCircular Indeterminate="true" Color="Color.Primary" />
+        </div>
+    }
+    else if (_groups.Count == 0)
+    {
+        <div class="empty-state">
+            <GlassCard Class="empty-card">
+                <MudText Typo="Typo.h6" Class="mb-2">Nie masz jeszcze żadnych grup.</MudText>
+                <MudText Typo="Typo.body2" Class="mb-4">
+                    Utwórz pierwszą grupę, aby móc przypisywać do niej dzieci.
+                </MudText>
+                <GlassButton ButtonStyle="ButtonStyles.Primary" OnClick="ShowAddGroupDialog">
+                    <MudIcon Icon="@Icons.Material.Filled.GroupAdd" Class="mr-2" /> Utwórz grupę
+                </GlassButton>
+            </GlassCard>
+        </div>
+    }
+    else
+    {
+        <div class="groups-grid">
+            @foreach (var g in _groups)
+            {
+                <FeatureCard Title="@g.Name"
+                             Description="Zarządzaj tą grupą"
+                             Icon="@Icons.Material.Filled.Groups"
+                             ChipText="@($"0 dzieci")"
+                             ChipIcon="@Icons.Material.Filled.ChildCare"
+                             ChipColor="Color.Primary"
+                             IconBackgroundClass="gradient--primary"
+                             OnClick="@(() => NavigateToGroup(g.Id))" />
+            }
+            
+            <div class="add-tile-wrapper">
+                <GlassCard Class="glass-interactive add-tile" Onclick="ShowAddGroupDialog">
+                    <div class="add-inner">
+                        <MudIcon Icon="@Icons.Material.Filled.AddCircleOutline" Size="Size.Large" />
+                        <MudText Typo="Typo.body2">Dodaj nową grupę</MudText>
+                    </div>
+                </GlassCard>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    .groups-container { max-width:1200px; margin:0 auto; padding:100px 20px 80px; }
+    .groups-header { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:40px; flex-wrap:wrap;}
+    .title { font-weight:600; }
+    .loading-state, .empty-state { display:flex; justify-content:center; padding:80px 0; }
+    .empty-card { text-align:center; padding:40px 48px; max-width:480px; }
+    .groups-grid { display:grid; gap:28px; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); }
+    .add-tile { height:100%; cursor:pointer; min-height:220px; display:flex; align-items:center; justify-content:center; text-align:center; }
+    .add-inner { display:flex; flex-direction:column; gap:12px; align-items:center; color:var(--color-text-secondary); }
+    .add-tile:hover .add-inner { color:var(--color-text-primary); }
+    @@media (max-width:900px){ .groups-container { padding:72px 20px 60px; } }
+    @@media (max-width:640px){ .groups-container { padding:56px 16px 56px; } }
+</style>
